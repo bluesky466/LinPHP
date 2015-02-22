@@ -1,11 +1,11 @@
 <?php 
 /**
- * [createIndexController 创建默认的index控制器]
- * @param  [type] $dirApp     [项目路径]
- * @param  [type] $pathSource [复制用的基础index控制器]
- * @param  [type] $fileMode   [文件权限]
+ * createIndexController 创建默认的index控制器
+ * @param  string $dirApp       项目路径
+ * @param  string $pathIndexTpl 复制用的基础index控制器模板路径
+ * @param  int    $fileMode     文件权限
  */
-function createIndexController($dirApp,$pathSource,$fileMode){
+function createIndexController($dirApp,$pathIndexTpl,$fileMode){
 
 	//smarty模板文件存放的目录
 	$dirTpl = $dirApp.'/Template';
@@ -35,13 +35,15 @@ function createIndexController($dirApp,$pathSource,$fileMode){
 		chmod($dirIndexController,$fileMode);
 	}
 
+    //复制基础index控制器模板
 	$indexController = $dirIndexController.'/IndexController.class.php';
 	if(!is_file($indexController)){
-		copy($pathSource, $indexController);
+		copy($pathIndexTpl, $indexController);
 		chmod($indexController,$fileMode);
 	}
 
+    //修改项目根目录的权限
 	chmod($dirApp,$fileMode);
 }
 
- ?>
+?>
